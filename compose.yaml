@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgres_s_m_j_v:
+    container_name: postgres_s_m_j_v
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: spring_mvc_json_view
+    ports:
+      - "5432:5432"
+  spring_mvc_json_view:
+    build: ./
+    container_name: s_m_j_v
+    image: s_m_j_v
+    depends_on:
+      - postgres_s_m_j_v
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_s_m_j_v:5432/spring_mvc_json_view
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: user
+    ports:
+      - "8080:8080"
